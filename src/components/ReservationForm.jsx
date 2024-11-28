@@ -36,7 +36,7 @@ class ReservationForm extends Component {
 
     // chiamata HTTP per la creazione di una nuova risorsa a partire dallo stato reservation NEL MOMENTO DELL'INVIO DEL FORM
     // (quindi già con i dati inseriti all'interno di this.state.reservation)
-    fetch("https://striveschool-api.herokuapp.om/api/reservation/", {
+    fetch("https://striveschool-api.herokuapp.com/api/reservation/", {
       method: "POST",
       body: JSON.stringify(this.state.reservation),
       headers: {
