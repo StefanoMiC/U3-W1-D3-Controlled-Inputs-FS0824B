@@ -21,7 +21,7 @@ class Home extends Component {
           <Col xs={10} md={8} xl={6}>
             <Carousel
               onSlid={slideIndex => {
-                // console.log("slide index", slideIndex);
+                console.log("slide index", slideIndex);
                 this.setState({ selectedPasta: menu[slideIndex] });
               }}
             >
@@ -32,27 +32,29 @@ class Home extends Component {
             Per un corretto uso del map, avremo bisogno di applicare SEMPRE una prop key sul primo elemento ritornato dal map,
             per evitare che React ricrei l'intera lista nel caso in cui uno degli elementi debba cambiare nel tempo.
             */}
-              {menu.map(pasta => (
-                // abbiamo ritornato tanti Carousel.Item quanti erano gli elementi dell'array
+              {menu.map(pasta => {
+                return (
+                  // abbiamo ritornato tanti Carousel.Item quanti erano gli elementi dell'array
 
-                // IMPORTANTE:
-                // 1) ricordarsi il return (implicito o esplicito dal map!)
-                // 2) ricordarsi di applicare la prop key al primo elemento ritornato dal map (non sui figli)
-                <Carousel.Item key={`carousel-item-${pasta.id}`} onClick={() => this.setState({ selectedPasta: pasta })}>
-                  {/*⚠️ mai chiamare setState fuori dal contesto di un evento o senza una funzione attorno.
+                  // IMPORTANTE:
+                  // 1) ricordarsi il return (implicito o esplicito dal map!)
+                  // 2) ricordarsi di applicare la prop key al primo elemento ritornato dal map (non sui figli)
+                  <Carousel.Item key={`carousel-item-${pasta.id}`} onClick={() => this.setState({ selectedPasta: pasta })}>
+                    {/*⚠️ mai chiamare setState fuori dal contesto di un evento o senza una funzione attorno.
                    risulterebbe in un loop infinito di setState che chiama render e render che chiama setState */}
-                  <Image src={pasta.image} className="img-fluid w-100" />
-                  <Carousel.Caption>
-                    <h3>{pasta.name}</h3>
-                    <p>{pasta.description}</p>
-                    <div>
-                      <Badge bg="dark" className="mb-3">
-                        {pasta.price}€
-                      </Badge>
-                    </div>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              ))}
+                    <Image src={pasta.image} className="w-100" />
+                    <Carousel.Caption>
+                      <h3>{pasta.name}</h3>
+                      <p>{pasta.description}</p>
+                      <div>
+                        <Badge bg="dark" className="mb-3">
+                          {pasta.price}€
+                        </Badge>
+                      </div>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                );
+              })}
             </Carousel>
           </Col>
         </Row>

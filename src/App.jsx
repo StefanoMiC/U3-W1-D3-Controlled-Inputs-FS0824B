@@ -12,7 +12,7 @@ class App extends Component {
       <>
         <TopBar claim="Niente secondi piatti!" />
         {/* <Counter /> */}
-        <ReservationForm />
+        <ReservationForm title="Prenota un tavolo" />
         <Home />
       </>
     );

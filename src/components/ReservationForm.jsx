@@ -29,13 +29,14 @@ class ReservationForm extends Component {
     }
   };
 
+  //  metodo custom ==> deve essere creato con una arrow function!
   //  metodo chiamato se avviene l'invio del form
   handleSubmit = e => {
     e.preventDefault();
 
     // chiamata HTTP per la creazione di una nuova risorsa a partire dallo stato reservation NEL MOMENTO DELL'INVIO DEL FORM
     // (quindi già con i dati inseriti all'interno di this.state.reservation)
-    fetch("https://striveschool-api.herokuapp.com/api/reservation/", {
+    fetch("https://striveschool-api.herokuapp.om/api/reservation/", {
       method: "POST",
       body: JSON.stringify(this.state.reservation),
       headers: {
@@ -62,7 +63,7 @@ class ReservationForm extends Component {
             title: "Prenotazione inviata!",
             message: `${savedReservation.name} ha prenotato per ${savedReservation.numberOfPeople} ${savedReservation.smoking ? "e ci sono fumatori" : ""} ${
               savedReservation.specialRequests ? ", richieste particolari: " + savedReservation.specialRequests : ""
-            }. Arrivo previsto: ${new Date(savedReservation.dateTime).toLocaleString()}`
+            }. Arrivo previsto: ${new Date(savedReservation.dateTime).toLocaleString()} prenotazione salvata con id: ${savedReservation._id}`
           }
         });
 
@@ -108,9 +109,10 @@ class ReservationForm extends Component {
   //   in react un Form o un qualsiasi input va reso CONTROLLED (controllato dallo stato)
 
   render() {
+    const { title } = this.props;
     return (
       <Container>
-        <h2 className="display-5 text-center mt-5">Prenota un tavolo</h2>
+        <h2 className="display-5 text-center mt-5">{title}</h2>
         {this.state.alert.isVisible && (
           <Alert variant={this.state.alert.type} onClose={() => this.setState({ alert: { isVisible: false, type: "", title: "", message: "" } })} dismissible>
             <Alert.Heading>{this.state.alert.title}</Alert.Heading>
@@ -131,6 +133,7 @@ class ReservationForm extends Component {
                   onChange={e => this.handleChange("name", e.target.value)}
                   required
                 />
+                {this.state.reservation.name.length <= 3 && <Form.Text className="text-warning">Devi inserire un nome più lungo di 3 lettere</Form.Text>}
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="phone">
